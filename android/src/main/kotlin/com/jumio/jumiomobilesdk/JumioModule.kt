@@ -14,6 +14,7 @@ import com.jumio.sdk.result.JumioResult
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import io.flutter.embedding.android.FlutterEngineProvider
 
 class JumioModule : ModuleBase(), JumioPreloadCallback {
     companion object {
@@ -24,7 +25,7 @@ class JumioModule : ModuleBase(), JumioPreloadCallback {
 
     init {
         onHostActivitySet = {
-            (hostActivity as FlutterActivity).provideFlutterEngine(hostActivity)?.let {
+            (hostActivity as? FlutterEngineProvider)?.provideFlutterEngine(hostActivity)?.let {
                 channel = MethodChannel(it.dartExecutor, "com.jumio.fluttersdk")
             }
         }
